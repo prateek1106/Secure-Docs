@@ -67,7 +67,7 @@ export default function App() {
 
   const findOwner = async (instance, acc, hash) => {
     let owner;
-    console.log("simpleStorageInstance", instance);
+    //console.log("simpleStorageInstance", instance);
     await instance.getOwner.call(hash, { from: acc })
       .then((result) => {
         owner = result;
@@ -77,15 +77,17 @@ export default function App() {
 
 
   const instantiateContract = (web3) => {
+
     // Instantiate contract once web3 provided.
     console.log("Instantiate Contract");
     const contract = require('truffle-contract');
+
     const simpleStorage = contract(SimpleStorageContract);
     simpleStorage.setProvider(web3.currentProvider);
+
     // Get accounts.
     web3.eth.getAccounts((error, accounts) => {
       simpleStorage.at('0xA384Abce590ef2AB0266A09d6086AFB8f30c9017').then((instance) => {
-        // simpleStorage.at("0x3497a137e8056cB54ECa2D63d189c60E6ba3Ed72").then((instance) => {
         // simpleStorage.deployed().then((instance) => {
         // console.log("instance", instance);
         setSimpleStorageInstance(instance);
@@ -93,7 +95,7 @@ export default function App() {
 
         //Getting the IPFS Hash String array
         console.log('Requesting for IPFS Hashes String Array:');
-        console.log(instance.getIpfsHashes.call(accounts[0]));
+        console.log(instance.getIpfsHashesPublic.call(accounts[0]));
         setHashes(instance, accounts[0]);
       });
     });
@@ -101,17 +103,19 @@ export default function App() {
 
 
   const setHashes = (instance, acc) => {
-    console.log("temp", instance, acc);
-    instance.getIpfsHashes.call(acc).then((ipfsHashList) => {
+    //console.log("temp", instance, acc);
+    instance.getIpfsHashesPublic.call(acc).then((ipfsHashList) => {
 
       const hashes = convertToStringHashes(ipfsHashList);
+      const hash_length = hashes.length;
 
       let owner_list = [];
       for (var i = 0; i < hashes.length; i++) {
         let hash = hashes[i];
         findOwner(instance, acc, hash).then((r) => {
           owner_list.push([hash, r]);
-          setIpfsHashes(owner_list);
+          if(owner_list.length===hash_length)
+            setIpfsHashes(owner_list);
         });
       }
     });

@@ -47,6 +47,7 @@ const InputForm = () => {
     const onSubmit = (event) => {
         event.preventDefault();
 
+        console.log('submit');
         // Sending buffer to IPFS and getting result hash
         ipfs.files.add(buffer, (error, result) => {
             if (error) {
