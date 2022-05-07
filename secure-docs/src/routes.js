@@ -2,6 +2,7 @@ import Dashboard from "layouts/dashboard";
 import Shared from "layouts/shared";
 import Profile from "layouts/profile";
 import AddDocument from "layouts/addDocument";
+import ViewImage from "layouts/viewImage";
 
 import Icon from "@mui/material/Icon";
 
@@ -22,7 +23,7 @@ const routes = [
     route: "/shared",
     component: <Shared />,
   },
-    {
+  {
     type: "collapse",
     name: "Profile",
     key: "profile",
@@ -38,7 +39,14 @@ const routes = [
     route: "/add-document",
     component: <AddDocument />,
   },
-
+  {
+    type: "route",
+    name: "Image",
+    key: "view_image",
+    icon: <Icon fontSize="small">topic</Icon>,
+    route: "/image/:hash",
+    component: <ViewImage />,
+  },
 ];
 
 export default routes;

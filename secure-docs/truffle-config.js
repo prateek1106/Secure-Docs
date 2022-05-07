@@ -1,5 +1,5 @@
 var HDWalletProvider = require("truffle-hdwallet-provider");
-var mnemonic = "dash trust merry basket flame album cream effort real crouch size rack";
+var mnemonic = process.env.REACT_APP_MNEMONIC;
 
 module.exports = {
     networks: {
@@ -10,11 +10,11 @@ module.exports = {
         },
         rinkeby: {
             provider: function () {
-                return new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/v3/fbc754c952f04fa4ac2249c7bdce8c51");
+                return new HDWalletProvider(mnemonic, process.env.REACT_APP_RINKEBY_INFURA_API);
             },
-            network_id: 4,
-            gas: 4600000,
-            gasPrice: 50000000000,
+            network_id: process.env.REACT_APP_TRUFFLE_NETWORK_ID,
+            gas: process.env.REACT_APP_TRUFFLE_GAS,
+            gasPrice: process.env.REACT_APP_TRUFFLE_GAS_PRICE,
         },
         solc: {
             optimizer: {

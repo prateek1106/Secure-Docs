@@ -8,7 +8,7 @@ import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import MDAvatar from "components/MDAvatar";
 
-function SimpleBlogCard({ image, title, description, route, author, action }) {
+function SimpleBlogCard({ image, title, description, route, author, hash, action }) {
 
   return (
     <Card>

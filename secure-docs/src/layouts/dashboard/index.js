@@ -13,12 +13,12 @@ import team2 from "assets/images/team-2.jpg";
 
 import { InitContext } from "context/init";
 
-
 function Dashboard() {
 
-  const { ipfsHashes } = useContext(InitContext);
+  const { ipfsHashes, account } = useContext(InitContext);
 
   let CardArray = null;
+
 
   if (ipfsHashes !== null) {
     // console.log(ipfsHashes);
@@ -26,10 +26,10 @@ function Dashboard() {
       <Grid item mb={5} xs={12} sm={6} lg={4} xl={3} key={i}>
         <SimpleBlogCard
           image={`https://ipfs.io/ipfs/${hash[0]}`}
-          title="Card title"
+          title= {hash[2]}
           description="Lorem ipsum dolor sit amet, consectetur aiis."
-          route="#"
-          author={{ media: team2, name: "Akash Sharma" }}
+          route={`/image/${hash[0]}`}
+          author={{ media: team2, name:  hash[1] }}
           hash={hash}
         />
       </Grid>

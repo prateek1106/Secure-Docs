@@ -32,6 +32,19 @@ function DefaultProjectCard({ image, label, title, description, action, authors 
     </Tooltip>
   ));
 
+  const renderButtons = action.map(({ route, color, label }) => (
+    <MDButton
+      component={Link}
+      to={route}
+      variant="outlined"
+      size="small"
+      color={color}
+      sx={{ marginRight: 2 }}
+    >
+      {label}
+    </MDButton>
+  ));
+
   return (
     <Card
       sx={{
@@ -56,7 +69,7 @@ function DefaultProjectCard({ image, label, title, description, action, authors 
           }}
         />
       </MDBox>
-      <MDBox mt={1} mx={0.5}>
+      <MDBox mt={1} mx={0.5} mb={5} p={1}>
         <MDTypography variant="button" fontWeight="regular" color="text" textTransform="capitalize">
           {label}
         </MDTypography>
@@ -89,29 +102,7 @@ function DefaultProjectCard({ image, label, title, description, action, authors 
           </MDTypography>
         </MDBox>
         <MDBox display="flex" justifyContent="space-between" alignItems="center">
-          {action.type === "internal" ? (
-            <MDButton
-              component={Link}
-              to={action.route}
-              variant="outlined"
-              size="small"
-              color={action.color}
-            >
-              {action.label}
-            </MDButton>
-          ) : (
-            <MDButton
-              component="a"
-              href={action.route}
-              target="_blank"
-              rel="noreferrer"
-              variant="outlined"
-              size="small"
-              color={action.color}
-            >
-              {action.label}
-            </MDButton>
-          )}
+          <MDBox display="flex">{renderButtons}</MDBox>
           <MDBox display="flex">{renderAuthors}</MDBox>
         </MDBox>
       </MDBox>

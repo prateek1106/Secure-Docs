@@ -13,7 +13,7 @@ import ipfs from 'utils/ipfs';
 import Dropbox from "layouts/addDocument/components/Dropbox";
 import { InitContext } from "context/init";
 
-const InputForm = () => {
+const InputForm = ({ setOpen, setNum }) => {
 
 
     const [title, setTitle] = React.useState("");
@@ -47,32 +47,64 @@ const InputForm = () => {
     const onSubmit = (event) => {
         event.preventDefault();
 
+        setOpen(true);
+
+        setTimeout(function () {
+            setNum(1);
+            setTimeout(function () {
+                setNum(2);
+                setTimeout(function () {
+                    setNum(3);
+                }, 1000);
+            }, 700);
+        }, 500);
+
         console.log('submit');
         // Sending buffer to IPFS and getting result hash
         ipfs.files.add(buffer, (error, result) => {
             if (error) {
-                console.error(error);
+                console.error('ipfs', error);
                 return;
             }
 
+            setNum(4);
             const ascii_hash = convertToAsciiHash(result[0].hash);
 
             console.log("ASCII Hash ", ascii_hash);
 
             console.log("simpleStorageInstance", simpleStorageInstance);
 
+
+            setTimeout(function () {
+                setNum(5);
+            }, 1000);
+
             if (accessibility) {
                 //Upload To Public 
-                simpleStorageInstance.uploadToPublic(ascii_hash, result[0].hash, account,
+                simpleStorageInstance.uploadToPublic(ascii_hash, result[0].hash, account, title,
                     { from: account }).then((r) => {
                         console.log('Successfully Uploaded to Public');
+                        setNum(6);
+                        setTimeout(function () {
+                          window.location ="/dashboard";
+                        }, 1000);
+
+                    }).catch((e) => {
+                        console.log("error", e);
                     });
             }
             else {
                 //Upload To Private
-                simpleStorageInstance.uploadToPrivate(ascii_hash, result[0].hash, account,
+                simpleStorageInstance.uploadToPrivate(ascii_hash, result[0].hash, account, title,
                     { from: account }).then((r) => {
                         console.log('Successfully Uploaded to Private');
+                        setNum(6);
+                        setTimeout(function () {
+                            window.location = "/dashboard";
+                        }, 1000);
+
+                    }).catch((e) => {
+                        console.log("error", e);
                     });
             }
         });

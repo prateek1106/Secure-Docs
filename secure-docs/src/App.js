@@ -32,7 +32,7 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
 
-  const { setIpfsHashes, setAccount, setSimpleStorageInstance } = useContext(InitContext);
+  const { setIpfsHashes, setAccount, setSimpleStorageInstance, setShared } = useContext(InitContext);
 
 
   useEffect(() => {
@@ -75,6 +75,15 @@ export default function App() {
     return owner;
   };
 
+  const findTitle = async (instance, acc, hash) => {
+    let title;
+    await instance.getTitle.call(hash, { from: acc })
+      .then((result) => {
+        title = result;
+      });
+    return title;
+  };
+
 
   const instantiateContract = (web3) => {
 
@@ -87,7 +96,7 @@ export default function App() {
 
     // Get accounts.
     web3.eth.getAccounts((error, accounts) => {
-      simpleStorage.at('0xA384Abce590ef2AB0266A09d6086AFB8f30c9017').then((instance) => {
+      simpleStorage.at( process.env.REACT_APP_CONTRACT_ADDRESS ).then((instance) => {
         // simpleStorage.deployed().then((instance) => {
         // console.log("instance", instance);
         setSimpleStorageInstance(instance);
@@ -97,6 +106,7 @@ export default function App() {
         console.log('Requesting for IPFS Hashes String Array:');
         console.log(instance.getIpfsHashesPublic.call(accounts[0]));
         setHashes(instance, accounts[0]);
+        setSharedHashes(instance, accounts[0]);
       });
     });
   };
@@ -109,13 +119,35 @@ export default function App() {
       const hashes = convertToStringHashes(ipfsHashList);
       const hash_length = hashes.length;
 
-      let owner_list = [];
-      for (var i = 0; i < hashes.length; i++) {
+      let new_list = [];
+      for (var i = 0; i < hash_length; i++) {
         let hash = hashes[i];
-        findOwner(instance, acc, hash).then((r) => {
-          owner_list.push([hash, r]);
-          if(owner_list.length===hash_length)
-            setIpfsHashes(owner_list);
+        findOwner(instance, acc, hash).then((owner) => {
+          findTitle(instance, acc, hash).then((title) => {
+            new_list.push([hash, owner, title]);
+            if (new_list.length === hash_length)
+              setIpfsHashes(new_list);
+          });
+        });
+      }
+    });
+  };
+
+  const setSharedHashes = (instance, acc) => {
+    //Update Shared List
+    instance.getShared.call(acc, { from: acc }).then((result) => {
+      const hashes = convertToStringHashes(result);
+      const hash_length = hashes.length;
+
+      let new_list = [];
+      for (var i = 0; i < hash_length; i++) {
+        let hash = hashes[i];
+        findOwner(instance, acc, hash).then((owner) => {
+          findTitle(instance, acc, hash).then((title) => {
+            new_list.push([hash, owner, title]);
+            if (new_list.length === hash_length)
+              setShared(new_list);
+          });
         });
       }
     });
