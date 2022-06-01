@@ -39,15 +39,15 @@ function ViewImage() {
     setSenderAccount(event.target.value);
   };
 
-  const { simpleStorageInstance, ipfsHashes, account } = useContext(InitContext);
+  const { simpleStorageInstance, profile, account } = useContext(InitContext);
 
   const { hash } = useParams();
 
   let title = null;
   let owner = null;
 
-  if (ipfsHashes != null) {
-    ipfsHashes.forEach(function (val) {
+  if (profile != null) {
+    profile.forEach(function (val) {
       if (val[0] === hash) {
         owner = val[1];
         title = val[2];
@@ -97,7 +97,7 @@ function ViewImage() {
               user: <User image={team2} name={account} email="Akash Sharma" />,
               date: (
                 <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
-                  23/04/18
+                  02/06/22
                 </MDTypography>
               ),
               action: (
@@ -150,7 +150,7 @@ function ViewImage() {
               image={`https://ipfs.io/ipfs/${hash}`}
               label="project #1"
               title={title}
-              description="As Uber works through a huge amount of internal management turmoil."
+              description="Uploaded using SecureDocs"
               action={[{
                 route: `https://rinkeby.etherscan.io/address/${account}`,
                 color: "info",

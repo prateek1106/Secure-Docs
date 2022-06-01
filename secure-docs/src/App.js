@@ -96,7 +96,7 @@ export default function App() {
 
     // Get accounts.
     web3.eth.getAccounts((error, accounts) => {
-      simpleStorage.at( process.env.REACT_APP_CONTRACT_ADDRESS ).then((instance) => {
+      simpleStorage.at(process.env.REACT_APP_CONTRACT_ADDRESS).then((instance) => {
         // simpleStorage.deployed().then((instance) => {
         // console.log("instance", instance);
         setSimpleStorageInstance(instance);
@@ -168,7 +168,8 @@ export default function App() {
           findTitle(instance, acc, hash).then((title) => {
             new_list.push([hash, owner, title]);
             if (new_list.length === hash_length)
-              setProfile(new_list);
+              console.log(new_list);
+            setProfile(new_list);
           });
         });
       }
