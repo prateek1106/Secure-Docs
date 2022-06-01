@@ -24,13 +24,13 @@ import { InitContext } from "context/init";
 function Overview() {
 
 
-  const { ipfsHashes, account } = useContext(InitContext);
+  const { profile, account } = useContext(InitContext);
 
   let NewArray = null;
 
-  if (ipfsHashes !== null) {
-    // console.log(ipfsHashes);
-    NewArray = ipfsHashes.map((hash, i) => (
+  if (profile !== null) {
+    console.log(profile);
+    NewArray = profile.map((hash, i) => (
       (hash[1] === account) &&
       (<Grid item mb={5} xs={12} sm={6} lg={4} xl={3} key={i}>
         <DefaultProjectCard

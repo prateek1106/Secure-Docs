@@ -32,7 +32,7 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const { pathname } = useLocation();
 
-  const { setIpfsHashes, setAccount, setSimpleStorageInstance, setShared } = useContext(InitContext);
+  const { setIpfsHashes, setAccount, setSimpleStorageInstance, setShared, setProfile } = useContext(InitContext);
 
 
   useEffect(() => {
@@ -107,6 +107,7 @@ export default function App() {
         console.log(instance.getIpfsHashesPublic.call(accounts[0]));
         setHashes(instance, accounts[0]);
         setSharedHashes(instance, accounts[0]);
+        setProfileHash(instance, accounts[0]);
       });
     });
   };
@@ -147,6 +148,27 @@ export default function App() {
             new_list.push([hash, owner, title]);
             if (new_list.length === hash_length)
               setShared(new_list);
+          });
+        });
+      }
+    });
+  };
+
+  const setProfileHash = (instance, acc) => {
+    //console.log("temp", instance, acc);
+    instance.getIpfsHashes.call(acc).then((ipfsHashList) => {
+
+      const hashes = convertToStringHashes(ipfsHashList);
+      const hash_length = hashes.length;
+
+      let new_list = [];
+      for (var i = 0; i < hash_length; i++) {
+        let hash = hashes[i];
+        findOwner(instance, acc, hash).then((owner) => {
+          findTitle(instance, acc, hash).then((title) => {
+            new_list.push([hash, owner, title]);
+            if (new_list.length === hash_length)
+              setProfile(new_list);
           });
         });
       }
