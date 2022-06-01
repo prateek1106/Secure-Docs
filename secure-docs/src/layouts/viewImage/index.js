@@ -152,13 +152,14 @@ function ViewImage() {
               title={title}
               description="As Uber works through a huge amount of internal management turmoil."
               action={[{
-                route: "/somewhere",
+                route: `https://rinkeby.etherscan.io/address/${account}`,
                 color: "info",
                 label: "etherscan",
+                type: "external"
               }, {
-                route: "/somewhere",
+                route: "/accessibility",
                 color: "success",
-                label: "share",
+                label: "Accessibility",
               }]}
               authors={[
                 { image: "https://bit.ly/3KxVWll", name: owner }

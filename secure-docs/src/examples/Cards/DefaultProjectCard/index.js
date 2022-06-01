@@ -10,6 +10,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import MDAvatar from "components/MDAvatar";
+import { act } from "react-dom/test-utils";
 
 function DefaultProjectCard({ image, label, title, description, action, authors }) {
   const renderAuthors = authors.map(({ image: media, name }) => (
@@ -32,18 +33,37 @@ function DefaultProjectCard({ image, label, title, description, action, authors 
     </Tooltip>
   ));
 
-  const renderButtons = action.map(({ route, color, label }) => (
-    <MDButton
-      component={Link}
-      to={route}
-      variant="outlined"
-      size="small"
-      color={color}
-      sx={{ marginRight: 2 }}
-    >
-      {label}
-    </MDButton>
-  ));
+  const renderButtons = action.map(({ route, color, label, type }) => {
+    if (type === "external") {
+      return (
+        <MDButton
+          component="a"
+          href={route}
+          target="_blank"
+          rel="noreferrer"
+          variant="outlined"
+          size="small"
+          color={color}
+          sx={{ marginRight: 2 }}
+        >
+          {label}
+        </MDButton>
+      )
+    } else {
+      return (
+        <MDButton
+          component={Link}
+          to={route}
+          variant="outlined"
+          size="small"
+          color={color}
+          sx={{ marginRight: 2 }}
+        >
+          {label}
+        </MDButton>
+      )
+    }
+  });
 
   return (
     <Card
@@ -55,13 +75,13 @@ function DefaultProjectCard({ image, label, title, description, action, authors 
         overflow: "visible",
       }}
     >
-      <MDBox position="relative" width="100.25%" shadow="xl" borderRadius="xl">
+      <MDBox position="relative" height="180px" shadow="xl" borderRadius="xl" sx={{display:"flex", alignItems: "center", justifyContent: "center"}}>
         <CardMedia
           src={image}
           component="img"
           title={title}
           sx={{
-            maxWidth: "100%",
+            height: "100%",
             margin: 0,
             boxShadow: ({ boxShadows: { md } }) => md,
             objectFit: "cover",

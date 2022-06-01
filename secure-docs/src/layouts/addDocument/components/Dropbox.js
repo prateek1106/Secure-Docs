@@ -12,6 +12,7 @@ function Dropbox({ setFiles, setBuffer }) {
             reader.readAsArrayBuffer(file[0]);
             reader.onloadend = () => {
                 setBuffer(Buffer(reader.result));
+                console.log(Buffer(reader.result));
             };
         }
     };

@@ -18,16 +18,6 @@ import DefaultProjectCard from "examples/Cards/DefaultProjectCard";
 import Header from "layouts/profile/components/Header";
 import MasterCard from "examples/Cards/MasterCard";
 
-// Images
-import homeDecor1 from "assets/images/home-decor-1.jpg";
-import homeDecor2 from "assets/images/home-decor-2.jpg";
-import homeDecor3 from "assets/images/home-decor-3.jpg";
-import homeDecor4 from "assets/images/home-decor-4.jpeg";
-import team1 from "assets/images/team-1.jpg";
-import team2 from "assets/images/team-2.jpg";
-import team3 from "assets/images/team-3.jpg";
-import team4 from "assets/images/team-4.jpg";
-
 import { InitContext } from "context/init";
 
 
@@ -71,9 +61,9 @@ function Overview() {
         <Divider />
         <MDBox mt={5} mb={3}>
           <MasterCard
-            number={4562112245947852}
-            holder="jack peterson"
-            expires="11/22"
+            number={account}
+            holder="Akash Sharma"
+            expires=""
           />
         </MDBox>
         <Divider />
