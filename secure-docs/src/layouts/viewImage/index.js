@@ -94,7 +94,7 @@ function ViewImage() {
           let newRows = [];
           accounts.forEach((account) => {
             newRows.push({
-              user: <User image={team2} name={account} email="Akash Sharma" />,
+              user: <User image={team2} name={account} email="Prateek Sharma" />,
               date: (
                 <MDTypography component="a" href="#" variant="caption" color="text" fontWeight="medium">
                   02/06/22

@@ -31,7 +31,7 @@ function Shared() {
         <SimpleBlogCard
           image={`https://ipfs.io/ipfs/${hash[0]}`}
           title={hash[2]}
-          description="Lorem ipsum dolor sit amet, consectetur aiis."
+          description=""
           route={`/image/${hash[0]}`}
           author={{ media: team2, name: hash[1] }}
           hash={hash}

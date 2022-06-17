@@ -37,7 +37,7 @@ function Overview() {
           image={`https://ipfs.io/ipfs/${hash[0]}`}
           label="project #1"
           title={hash[2]}
-          description="Lorem ipsum dolor sit amet, consectetur aiis."
+          description=""
           key={hash[0]}
           action={[{
             route: `/image/${hash[0]}`,
@@ -62,7 +62,7 @@ function Overview() {
         <MDBox mt={5} mb={3}>
           <MasterCard
             number={account}
-            holder="Akash Sharma"
+            holder="Prateek Sharma"
             expires=""
           />
         </MDBox>
